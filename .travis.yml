@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.5.1"
+install:
+  - pip install codecov
+script:
+  # Normal tests
+  - py.test --cov
+after_success:
+  - codecov
