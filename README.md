@@ -3,5 +3,4 @@
 [![udacity](https://img.shields.io/badge/udacity-ud953-00b0e3.svg?style=flat)](https://www.udacity.com/course/linear-algebra-refresher-course--ud953)
 
 Course content for Udacity's Linear Algebra Refresher 
-[Udacity ud953](https://www.udacity.com/course/linear-algebra-refresher-course--ud953)
-Coursework for Udacity's Linear Algebra Refresher Course UD953 (https://classroom.udacity.com/courses/ud953)
+
