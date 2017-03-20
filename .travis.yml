@@ -5,6 +5,6 @@ install:
   - pip install codecov
 script:
   # Normal tests
-  - python -m unittest test/vectorTest.py  
+  - python -m unittest discover 
 after_success:
   - codecov

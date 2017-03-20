@@ -154,6 +154,15 @@ class VectorTest(unittest.TestCase):
         result = v.parallel(w)
         self.assertTrue(result)
 
+    def test_projection(self):
+        pass
+
+    def test_find_orthogonal(self):
+        pass
+
+    def test_decompose_orthogonal(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
