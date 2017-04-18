@@ -47,6 +47,15 @@ class Vector(object):
         if isinstance(v, Vector):
             return sum([x*y for x, y in zip(self.coordinates, v.coordinates)])
 
+    def is_orthogonal(self, v, tolerance=1e-10):
+        return abs(self.dot_product(v)) < tolerance
+
+    def is_parallel(self, v, tolerance=1e-10):
+        if self.is_zero() or v.is_zero(): return True
+        else:
+            items = [x / y for x, y in zip(self.coordinates, v.coordinates)]
+            return all([abs(items[0] - item) < 1e-10 for item in items])
+
     def is_zero(self, tolerance=1e-10):
         return self.magnitude() < tolerance
 
@@ -59,17 +68,17 @@ class Vector(object):
         except ZeroDivisionError:
             raise Exception('Cannot normalize the zero vector')
 
-    def orthogonal(self, v, tolerance=1e-10):
-        return abs(self.dot_product(v)) < tolerance
+    # perpendicular, where v is base vector
+    def orthogonal(self, base_vector):
+            return self - self.projection(base_vector)
 
-    def parallel(self, v, tolerance=1e-10):
-        if self.is_zero() or v.is_zero(): return True
-        else:
-            items = [x / y for x, y in zip(self.coordinates, v.coordinates)]
-            return all([abs(items[0] - item) < 1e-10 for item in items])
+    #project self onto base vector v, parallel
+    def projection(self, base_vector):
+        return self.dot_product(base_vector.normalize()) * base_vector.normalize()
 
     def scalar_multiplication(self, v):
         return self.__mul__(v)
+
 
 
     __rmul__ = __mul__

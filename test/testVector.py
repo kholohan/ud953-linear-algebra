@@ -102,67 +102,85 @@ class VectorTest(unittest.TestCase):
         v = Vector([-7.579, -7.88])
         w = Vector([22.737, 23.64])
 
-        result = v.orthogonal(w)
+        result = v.is_orthogonal(w)
         self.assertFalse(result)
 
     def test_parallel(self):
         v = Vector([-7.579, -7.88])
         w = Vector([22.737, 23.64])
 
-        result = v.parallel(w)
+        result = v.is_parallel(w)
         self.assertTrue(result)
 
     def test_not_orthogonal2(self):
         v = Vector([-2.029, 9.97, 4.172])
         w = Vector([-9.231, -6.639, -7.245])
 
-        result = v.orthogonal(w)
+        result = v.is_orthogonal(w)
         self.assertFalse(result)
 
     def test_not_parallel(self):
         v = Vector([-2.029, 9.97, 4.172])
         w = Vector([-9.231, -6.639, -7.245])
 
-        result = v.parallel(w)
+        result = v.is_parallel(w)
         self.assertFalse(result)
 
     def test_orthogonal(self):
         v = Vector([-2.328, -7.284, -1.214])
         w = Vector([-1.821, 1.072, -2.94])
 
-        result = v.orthogonal(w)
+        result = v.is_orthogonal(w)
         self.assertTrue(result)
 
     def test_not_parallel2(self):
         v = Vector([-2.328, -7.284, -1.214])
         w = Vector([-1.821, 1.072, -2.94])
 
-        result = v.parallel(w)
+        result = v.is_parallel(w)
         self.assertFalse(result)
 
     def test_orthogonal2(self):
         v = Vector([2.118, 4.827])
         w = Vector([0, 0])
 
-        result = v.orthogonal(w)
+        result = v.is_orthogonal(w)
         self.assertTrue(result)
 
     def test_parallel4(self):
         v = Vector([2.118, 4.827])
         w = Vector([0, 0])
 
-        result = v.parallel(w)
+        result = v.is_parallel(w)
         self.assertTrue(result)
 
     def test_projection(self):
-        pass
+        v = Vector([3.039, 1.879])
+        base_vector = Vector([0.825, 2.036])
 
-    def test_find_orthogonal(self):
-        pass
+        result = v.projection(base_vector)
+        answer = Vector([1.082606962484467, 2.671742758325303])
+        self.assertEquals(result, answer)
 
-    def test_decompose_orthogonal(self):
-        pass
 
+    def test_orthogonal(self):
+        v = Vector([-9.88, -3.264, -8.159])
+        base_vector = Vector([-2.155, -9.353, -9.473])
+
+        result = v.orthogonal(base_vector)
+        answer = Vector([-8.350081043195763, 3.376061254287722, -1.4337460427811841])
+        self.assertEquals(result, answer)
+
+    def test_find_orthogonal_parallel(self):
+        v = Vector([3.009, -6.172, 3.692, -2.51])
+        base_vector = Vector([6.404, -9.144, 2.759, 8.718])
+
+        parallel_result = v.projection(base_vector)  #projection onto b
+        orthogonal_result = v.orthogonal(base_vector)
+
+        # v = parallel + orthonal
+        v_reconstructed = parallel_result + orthogonal_result
+        self.assertTrue(v.is_parallel(v_reconstructed))
 
 if __name__ == '__main__':
     unittest.main()
