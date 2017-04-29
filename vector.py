@@ -43,6 +43,20 @@ class Vector(object):
     def angle_radian(self, v):
         return acos(round(self.dot_product(v) / (self.magnitude() * v.magnitude()), 3))
 
+    def area_parallelogram(self, v):
+        return self.cross_product(v).magnitude()
+
+    def area_triangle(self, v):
+        return self.area_parallelogram(v) / 2
+
+    def cross_product(self, v):
+        [x1, y1, z1] = self.coordinates
+        [x2, y2, z2] = v.coordinates
+        x = (y1 * z2) - (y2 * z1)
+        y = -((x1 * z2) - (x2 * z1))
+        z = (x1 * y2) - (x2 * y1)
+        return Vector([x, y, z])
+
     def dot_product(self, v):
         if isinstance(v, Vector):
             return sum([x*y for x, y in zip(self.coordinates, v.coordinates)])

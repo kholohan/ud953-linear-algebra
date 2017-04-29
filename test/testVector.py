@@ -182,5 +182,38 @@ class VectorTest(unittest.TestCase):
         v_reconstructed = parallel_result + orthogonal_result
         self.assertTrue(v.is_parallel(v_reconstructed))
 
+    def test_cross_product(self):
+        v = Vector([8.462, 7.893, -8.187])
+        w = Vector ([6.984, -5.975, 4.778])
+
+        result = v.cross_product(w)
+        answer = Vector([-11.204570999999994, -97.609444, -105.68516199999999])
+        self.assertEquals(result, answer)
+
+        #verify answer is correct by checking for orthogonality
+        v_is_orthogonal = v.is_orthogonal(result)
+        self.assertTrue(v_is_orthogonal)
+
+        w_is_orthogonal = w.is_orthogonal(result)
+        self.assertTrue(w_is_orthogonal)
+
+    def test_area_parallelogram(self):
+        v = Vector([-8.987, -9.838, 5.031])
+        w = Vector ([-4.268, -1.861, -8.866])
+
+        result = v.area_parallelogram(w)
+        answer = 142.12222140184633
+        self.assertEqual(result, answer)
+
+    def test_area_triangle(self):
+        v = Vector([1.5, 9.547, 3.691])
+        w = Vector ([-6.007, 0.124, 5.772])
+
+        result = v.area_triangle(w)
+        answer = 42.56493739941894
+        self.assertEqual(result, answer)
+
+
+
 if __name__ == '__main__':
     unittest.main()
