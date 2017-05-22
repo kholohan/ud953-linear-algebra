@@ -16,13 +16,13 @@ class Line(object):
         self.dimension = 2
 
         if not normal_vector:
-            all_zeros = ['0']*self.dimension
+            all_zeros = [0]*self.dimension
             normal_vector = Vector(all_zeros)
         self.normal_vector = normal_vector
 
         if not constant_term:
-            constant_term = Decimal('0')
-        self.constant_term = Decimal(constant_term)
+            constant_term = 0
+        self.constant_term = constant_term
 
         self.set_basepoint()
 
@@ -31,12 +31,12 @@ class Line(object):
         try:
             n = self.normal_vector
             c = self.constant_term
-            basepoint_coords = ['0']*self.dimension
+            basepoint_coords = [0]*self.dimension
 
             initial_index = Line.first_nonzero_index(n)
             initial_coefficient = n[initial_index]
 
-            basepoint_coords[initial_index] = c/initial_coefficient
+            basepoint_coords[initial_index] = c / initial_coefficient
             self.basepoint = Vector(basepoint_coords)
 
         except Exception as e:
@@ -45,6 +45,9 @@ class Line(object):
             else:
                 raise e
 
+    def __eq__(self, line):
+        basepoint_diff = self.basepoint - line.basepoint
+        return basepoint_diff.is_orthogonal(self.normal_vector)
 
     def __str__(self):
 
@@ -90,6 +93,26 @@ class Line(object):
         output += ' = {}'.format(constant)
 
         return output
+
+    def is_equal(self, line):
+        return self.__eq__(line)
+
+    def intersection(self, line, tolerance=1e-10):
+        if self == line : return self.normal_vector #Lines are the same
+        elif self.is_parallel(line) : return None
+
+        denominator = (self.normal_vector[0] * line.normal_vector[1]) - (self.normal_vector[1] * line.normal_vector[0]) #AD-BC (constants of both lines)
+        x = ((line.normal_vector[1] * self.constant_term) - (self.normal_vector[1] * line.constant_term)) / denominator # (Dk_1 - Bk_2) / (AD - BC)
+        y = ((self.normal_vector[0] * line.constant_term) - (line.normal_vector[0] * self.constant_term)) / denominator # (Ak_2 + Ck_1) / (AD - BC)
+
+        return Vector([x, y])
+
+    def is_orthogonal(self, line):
+        return self.normal_vector.is_orthogonal(line.normal_vectorm)
+
+    def is_parallel(self, line):
+        return self.normal_vector.is_parallel(line.normal_vector)
+
 
 
     @staticmethod

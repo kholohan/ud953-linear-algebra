@@ -17,25 +17,29 @@ class Vector(object):
         except TypeError:
             raise TypeError('The coordinates must be an iterable')
 
-
-    def __str__(self):
-        return 'Vector: {}'.format(self.coordinates)
-
+    def __add__(self, v):
+        return Vector([x+y for x, y in zip(self.coordinates, v.coordinates)])
 
     def __eq__(self, v):
         return self.coordinates == v.coordinates
 
-    def __add__(self, v):
-        return Vector([x+y for x, y in zip(self.coordinates, v.coordinates)])
+    def __getitem__(self,index):
+        return self.coordinates[index]
 
-    def __sub__(self, v):
-        return Vector([x-y for x, y in zip(self.coordinates, v.coordinates)])
+    def __iter__(self):
+        return iter(self.coordinates)
 
     def __mul__(self, v):
         if isinstance(v, Vector):
             return Vector([x*y for x, y in zip(self.coordinates, v.coordinates)])
         else:
             return Vector([x*v for x in self.coordinates])
+
+    def __str__(self):
+        return 'Vector: {}'.format(self.coordinates)
+
+    def __sub__(self, v):
+        return Vector([x-y for x, y in zip(self.coordinates, v.coordinates)])
 
     def angle_degree(self, v):
         return degrees(self.angle_radian(v))
@@ -68,7 +72,7 @@ class Vector(object):
         if self.is_zero() or v.is_zero(): return True
         else:
             items = [x / y for x, y in zip(self.coordinates, v.coordinates)]
-            return all([abs(items[0] - item) < 1e-10 for item in items])
+            return all([abs(items[0] - item) < tolerance for item in items])
 
     def is_zero(self, tolerance=1e-10):
         return self.magnitude() < tolerance

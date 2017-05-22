@@ -33,7 +33,7 @@ class VectorTest(unittest.TestCase):
         answer_vector = Vector([12.38211, -7.49892, -2.35638])
         self.assertEqual(result, answer_vector)
 
-    def testMagnitude(self):
+    def test_magnitude(self):
         v = Vector([-0.221, 7.437])
 
         result = v.magnitude()
@@ -41,7 +41,7 @@ class VectorTest(unittest.TestCase):
         answer = 7.440282924728065
         self.assertEqual(result, answer)
 
-    def testMagnitude2(self):
+    def test_magnitude2(self):
         v = Vector([8.813, -1.331, -6.247])
 
         result = v.magnitude()
