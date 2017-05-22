@@ -56,8 +56,8 @@ class PlaneTest(unittest.TestCase):
     def test_is_parallel3(self):
         # plane 1: -7.926x + 8.625y - 7.217 z = -7.952
         # plane 2: -2.642x + 2.875y - 2.404z = -2.443
-        plane1 = Plane(Vector([-7.926, 8.625, -7.217]), -7.952)
+        plane1 = Plane(Vector([-7.926, 8.625, -7.212]), -7.952)
         plane2 = Plane(Vector([-2.642, 2.875, -2.404]), -2.443)
 
-        result = plane1.is_parallel(plane2, 0.1)
+        result = plane1.is_parallel(plane2)
         self.assertTrue(result)
